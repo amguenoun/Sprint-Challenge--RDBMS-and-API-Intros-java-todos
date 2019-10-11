@@ -25,4 +25,9 @@ public class TodoServiceImpl implements TodoService {
 	public Todo findTodoById(long id) {
 		return todoRepo.findById(id).orElseThrow(()-> new EntityNotFoundException("Todo with id " + id + " not found."));
 	}
+
+	@Override
+	public Todo update(Todo todo, long id) {
+		return todoRepo.save(todo);
+	}
 }

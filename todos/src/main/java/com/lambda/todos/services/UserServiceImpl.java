@@ -72,6 +72,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	public User findByName(String name) {
 		return userRepo.findByUsername(name);
 	}
+
+	@Override
+	public void addTodo(Todo todo, long id) {
+		User user =  userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("User id " + id + " not found!"));
+		todo.setUser(user);
+		user.getTodos().add(todo);
+	}
 }
 
 

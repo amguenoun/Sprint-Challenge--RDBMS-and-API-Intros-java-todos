@@ -1,5 +1,6 @@
 package com.lambda.todos.controllers;
 
+import com.lambda.todos.models.Todo;
 import com.lambda.todos.models.User;
 import com.lambda.todos.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,12 @@ public class UserController {
 	@PostMapping(value = "/user", consumes = {"application/json"})
 	public ResponseEntity<?> createUser(@Valid @RequestBody User newUser){
 		userService.save(newUser);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@PostMapping(value = "/todo/{userid}", consumes = {"application/json"})
+	public ResponseEntity<?> addTodoToUser(@Valid @RequestBody Todo newTodo, @PathVariable long userid){
+		userService.addTodo(newTodo, userid);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 }
