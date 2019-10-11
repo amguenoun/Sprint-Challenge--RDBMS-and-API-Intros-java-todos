@@ -7,6 +7,8 @@ import com.lambda.todos.models.UserRoles;
 import com.lambda.todos.repositories.RoleRepository;
 import com.lambda.todos.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -75,9 +77,17 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 	@Override
 	public User addTodo(Todo todo, long id) {
-		User user =  userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("User id " + id + " not found!"));
-		user.getTodos().add(new Todo(todo.getDescription(), todo.getDatestarted(), user));
-		return userRepo.save(user);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User authenticatedUser = userRepo.findByUsername(authentication.getName());
+
+		if(id == authenticatedUser.getUserid()){
+			User user =  userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("User id " + id + " not found!"));
+			user.getTodos().add(new Todo(todo.getDescription(), todo.getDatestarted(), user));
+			return userRepo.save(user);
+		}
+		else{
+			throw new EntityNotFoundException(id + " Not current user");
+		}
 	}
 
 	@Override
