@@ -28,6 +28,20 @@ public class TodoServiceImpl implements TodoService {
 
 	@Override
 	public Todo update(Todo todo, long id) {
-		return todoRepo.save(todo);
+		Todo current = findTodoById(id);
+
+		if(todo.getDatestarted() != null){
+			current.setDatestarted(todo.getDatestarted());
+		}
+
+		if(todo.getDescription() != null){
+			current.setDescription(todo.getDescription());
+		}
+
+		if(todo.isCompleted()){
+			current.setCompleted(todo.isCompleted());
+		}
+
+		return todoRepo.save(current);
 	}
 }

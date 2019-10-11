@@ -33,7 +33,6 @@ public class UserController {
 
 	@PostMapping(value = "/todo/{userid}", consumes = {"application/json"})
 	public ResponseEntity<?> addTodoToUser(@Valid @RequestBody Todo newTodo, @PathVariable long userid){
-		System.out.println(newTodo.getDescription());
 		userService.addTodo(newTodo, userid);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}

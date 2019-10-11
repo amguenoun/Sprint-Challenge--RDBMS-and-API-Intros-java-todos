@@ -15,7 +15,7 @@ public class TodoController {
 	private TodoService todoService;
 
 	@PutMapping(value = "/todoid/{todoid}", consumes = {"application/json"})
-	public ResponseEntity<?> updateTodo(@PathVariable long todoid, @RequestBody Todo todo){
+	public ResponseEntity<?> completeTodo(@PathVariable long todoid, @RequestBody Todo todo){
 		todoService.update(todo, todoid);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
