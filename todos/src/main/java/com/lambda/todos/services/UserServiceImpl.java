@@ -74,10 +74,16 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	}
 
 	@Override
-	public void addTodo(Todo todo, long id) {
+	public User addTodo(Todo todo, long id) {
 		User user =  userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("User id " + id + " not found!"));
 		todo.setUser(user);
 		user.getTodos().add(todo);
+		return user;
+	}
+
+	@Override
+	public void delete(long id) {
+		userRepo.deleteById(id);
 	}
 }
 

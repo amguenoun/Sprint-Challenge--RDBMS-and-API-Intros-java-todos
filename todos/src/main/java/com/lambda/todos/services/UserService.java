@@ -13,6 +13,8 @@ public interface UserService
 
 	User findByName(String name);
 
-	void addTodo(Todo todo, long id);
+	User addTodo(Todo todo, long id);
+
+	void delete(long id);
 
 }

@@ -36,4 +36,10 @@ public class UserController {
 		userService.addTodo(newTodo, userid);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
+
+	@DeleteMapping(value = "/userid/{userid}")
+	public ResponseEntity<?> deleteUser(@PathVariable long userid){
+		userService.delete(userid);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }
