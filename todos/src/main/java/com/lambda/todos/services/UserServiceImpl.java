@@ -76,9 +76,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	@Override
 	public User addTodo(Todo todo, long id) {
 		User user =  userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("User id " + id + " not found!"));
-		todo.setUser(user);
-		user.getTodos().add(todo);
-		return user;
+		user.getTodos().add(new Todo(todo.getDescription(), todo.getDatestarted(), user));
+		return userRepo.save(user);
 	}
 
 	@Override
