@@ -30,7 +30,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 				.antMatchers("/",
 						"/h2-console/**")
 				.permitAll()
-				.antMatchers("/roles/**")
+				.antMatchers("/users/user")
+				.hasAnyRole("ADMIN")
+				.antMatchers("/users/userid/**")
 				.hasAnyRole("ADMIN")
 				.and()
 				.exceptionHandling()
